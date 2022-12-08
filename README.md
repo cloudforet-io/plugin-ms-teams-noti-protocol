@@ -1,1 +1,1 @@
-# plugin-teams-noti-protocol
+# plugin-msteams-noti-protocol
