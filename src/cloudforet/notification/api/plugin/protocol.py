@@ -1,7 +1,5 @@
 from spaceone.api.notification.plugin import protocol_pb2_grpc, protocol_pb2
 from spaceone.core.pygrpc import BaseAPI
-from spaceone.core.pygrpc.message_type import *
-
 from cloudforet.notification.service import ProtocolService
 
 
