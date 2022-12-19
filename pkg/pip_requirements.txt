@@ -1,4 +1,4 @@
 spaceone-core
 spaceone-api
 spaceone-tester
-pyteams
+pymsteams

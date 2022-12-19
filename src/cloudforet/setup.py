@@ -33,7 +33,7 @@ setup(
         'spaceone-core',
         'spaceone-api',
         'spaceone-tester',
-        'pytemas'
+        'pymstemas'
     ],
     zip_safe=False,
 )
