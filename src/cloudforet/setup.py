@@ -20,7 +20,7 @@ with open('VERSION', 'r') as f:
     f.close()
 
 setup(
-    name='plugin-notification-ms-teams-protocol',
+    name='plugin-ms-teams-noti-protocol',
     version=VERSION,
     description='MS Teams notification protocol',
     long_description='',

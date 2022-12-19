@@ -1,8 +1,9 @@
 MS_TEAMS_CONF = {
     'attachment_color_map': {
-        'ERROR': 'E81123',
-        'WARNING': '#EA4646',
-        'INFO': '#898995',
-        'SUCCESS': '#87D247'
+        'INFO': '#43BEFF',
+        'ERROR': '#FF6A6A',
+        'SUCCESS': '#60B731',
+        'WARNING': '#FFCE02',
+        'DEFAULT': '#858895'
     }
 }

@@ -1,0 +1,15 @@
+---
+name: ms_teams_webhook
+service_type: secret.credentials
+schema:
+  properties:
+    hookurl:
+      minLength: 10
+      title: Connector Webhook URL
+      type: string
+  required:
+    - hookurl
+  type: object
+labels: []
+tags:
+  description: MS Teams Connector Webhook

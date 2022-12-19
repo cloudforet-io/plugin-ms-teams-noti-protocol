@@ -1,7 +1,5 @@
 from spaceone.api.notification.plugin import notification_pb2_grpc, notification_pb2
 from spaceone.core.pygrpc import BaseAPI
-from spaceone.core.pygrpc.message_type import *
-from cloudforet.notification.service import NotificationService
 
 
 class Notification(BaseAPI, notification_pb2_grpc.NotificationServicer):

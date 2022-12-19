@@ -1,7 +1,4 @@
-import time
 import logging
-
-from spaceone.core import utils
 from spaceone.core.service import *
 from cloudforet.notification.manager.notification_manager import NotificationManager
 
@@ -33,5 +30,5 @@ class NotificationService(BaseService):
         hookurl = channel_data.get('hookurl')
 
         noti_mgr: NotificationManager = self.locator.get_manager('NotificationManager')
-
         noti_mgr.dispatch(hookurl, notification_type, message, **kwargs)
+        return None
