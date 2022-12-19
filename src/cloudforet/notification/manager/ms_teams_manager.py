@@ -13,7 +13,7 @@ class MSTeamsManager(BaseManager):
 
     def make_card_section(self, notification_type, message):
         title = message['title']
-        sub_title = message.get('occured_at', None)
+        sub_title = message.get('occurred_at', None)
         link = message.get('link', None)
         description = f"{message.get('description', None)}"
         tags = message.get('tags', [])
@@ -33,7 +33,7 @@ class MSTeamsManager(BaseManager):
         self.conn.set_section_color(notification_type)
         self._make_button_from_callbacks(callbacks)
 
-        if image_url := message['image_url']:
+        if image_url := message.get('image_url'):
             self.conn.set_image(image_url)
 
     def _make_button_from_callbacks(self, callbacks):
