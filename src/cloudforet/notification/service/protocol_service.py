@@ -19,12 +19,12 @@ class ProtocolService(BaseService):
             'data': {
                 'schema': {
                     'properties': {
-                        'token': {
-                            'description': 'Incoming Webhook URL created by your channel',
-                            'minLength': 4,
-                            'title': 'Incoming Webhook',
+                        'hookurl': {
+                            'description': 'Incoming Webhook URL created by your Teams Connector',
+                            'minLength': 10,
+                            'title': 'Connector Webhook URL',
                             'type': 'string',
-                            'examples': ['https://...']
+                            'examples': ['https://xxx.webhook.office.com/...']
                         }
                     },
                     'required': [
