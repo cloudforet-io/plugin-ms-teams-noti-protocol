@@ -1,10 +1,6 @@
 ---
-name: Teams
+name: MS Teams
 plugin_info:
   plugin_id: plugin-ms-teams-noti-protocol
-  options: {}
-  schema: ms_teams_webhook
-  secret_data:
-    hookurl: "https://xxxx.webhook.office.com/xxxxx"
 tags:
-  description: Teams
+  description: MS Teams
