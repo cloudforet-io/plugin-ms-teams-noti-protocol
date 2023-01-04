@@ -1,10 +1,7 @@
 name: MS Teams Notification Protocol
 service_type: notification.Protocol
 image: pyengine/plugin-ms-teams-noti-protocol
-capability:
-  supported_schema:
-  - ms_teams_webhook
-  data_type: SECRET
+capability: {}
 tags:
   description: MS Teams
   "spaceone:plugin_name": MS Teams
