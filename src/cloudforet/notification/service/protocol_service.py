@@ -1,4 +1,5 @@
 import logging
+
 from spaceone.core.service import *
 
 _LOGGER = logging.getLogger(__name__)
@@ -20,11 +21,11 @@ class ProtocolService(BaseService):
                 'schema': {
                     'properties': {
                         'hookurl': {
-                            'description': 'Incoming Webhook URL created by your Teams Connector',
+                            'description': 'Webhook URL generated from Microsoft Power Automate',
                             'minLength': 10,
                             'title': 'Connector Webhook URL',
                             'type': 'string',
-                            'examples': ['https://xxx.webhook.office.com/...']
+                            'examples': ['https://xxx.{region}.logic.azure.com/workflows/...']
                         }
                     },
                     'required': [
