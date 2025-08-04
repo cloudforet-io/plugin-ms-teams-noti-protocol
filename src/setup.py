@@ -13,7 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open('VERSION', 'r') as f:
     VERSION = f.read().strip()
@@ -31,7 +31,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'spaceone-api',
-        'pymsteams'
+        'requests'
     ],
     zip_safe=False,
 )

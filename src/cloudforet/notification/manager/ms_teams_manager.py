@@ -1,4 +1,5 @@
 from spaceone.core.manager import BaseManager
+
 from cloudforet.notification.connector.ms_teams import MSTeamsConnector
 
 
@@ -11,7 +12,7 @@ class MSTeamsManager(BaseManager):
     def set_connector(self, hookurl):
         self.conn: MSTeamsConnector = self.locator.get_connector('MSTeamsConnector', hookurl=hookurl)
 
-    def make_card_section(self, notification_type, message):
+    def make_adaptive_card(self, notification_type, message):
         title = message['title']
         sub_title = message.get('occurred_at', None)
         link = message.get('link', None)
@@ -20,31 +21,97 @@ class MSTeamsManager(BaseManager):
         callbacks = message.get('callbacks', [])
         content_type = message.get('content_type', None)
 
-        # want to use markdown
-        if contents := message.get('contents') and content_type == 'MARKDOWN':
-            self.conn.enable_markdown()
+        if content_type == "MARKDOWN" and (contents := message.get("contents")):
             description = contents
 
-        self.conn.set_title(title)
-        self.conn.set_section_title(title, link)
-        self.conn.set_section_sub_title(sub_title)
-        self.conn.set_description(description)
-        self._make_add_fact_from_tags(tags)
-        self.conn.set_section_color(notification_type)
-        self._make_button_from_callbacks(callbacks)
+        formatted_title = self._format_title_with_link(title, link)
+        actions = self._make_actions_from_callbacks(callbacks)
+        facts = self._make_facts_from_tags(tags)
 
-        if image_url := message.get('image_url'):
-            self.conn.set_image(image_url)
+        body = [
+            {
+                "type": "TextBlock",
+                "size": "Large",
+                "weight": "Bolder",
+                "text": formatted_title,
+                "wrap": True,
+            },
+            {
+                "type": "TextBlock",
+                "isSubtle": True,
+                "spacing": "None",
+                "text": sub_title,
+                "wrap": True,
+            },
+            {
+                "type": "TextBlock",
+                "text": description,
+                "wrap": True,
+            },
+            {
+                "type": "FactSet",
+                "facts": facts,
+            },
+        ]
 
-    def _make_button_from_callbacks(self, callbacks):
+        if image_url := message.get("image_url"):
+            body.append(
+                {
+                    "type": "Image",
+                    "url": image_url,
+                    "size": "Auto",
+                    "altText": "Image",
+                }
+            )
+
+        adaptive_card = {
+            "type": "message",
+            "attachments": [
+                {
+                    "contentType": "application/vnd.microsoft.card.adaptive",
+                    "contentUrl": None,
+                    "content": {
+                        "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+                        "type": "AdaptiveCard",
+                        "version": "1.5",
+                        "body": body,
+                        "actions": actions,
+                    },
+                }
+            ],
+        }
+
+        return adaptive_card
+
+    @staticmethod
+    def _format_title_with_link(title: str, link: str = None) -> str:
+        if link:
+            return f"[{title}]({link})"
+        return title
+
+    @staticmethod
+    def _make_actions_from_callbacks(callbacks):
+        actions = []
+
         for callback in callbacks:
-            buttontext = callback['label']
-            buttonurl = callback['url']
-            self.conn.set_button(buttontext, buttonurl)
+            actions.append(
+                {
+                    "type": "Action.OpenUrl",
+                    "title": callback["label"],
+                    "url": callback["url"],
+                }
+            )
 
-    def _make_add_fact_from_tags(self, tags):
+        return actions
+
+    @staticmethod
+    def _make_facts_from_tags(tags):
+        facts = []
+
         for tag in tags:
-            self.conn.set_tag(tag)
+            facts.append({"title": tag.get("key", ""), "value": tag.get("value", "")})
 
-    def send_message(self):
-        self.conn.send()
+        return facts
+
+    def send_message(self, adaptive_card):
+        self.conn.send(adaptive_card)
